@@ -50,8 +50,36 @@ my-app
 ## 案例
 案例 结合官网与实际项目
 ``` bash
-# 组件
-components/Counter
+# 使用css module
+vue.config.js 配置
+module.exports = {
+  css: {
+    loaderOptions: {
+      css: {
+        modules: true,
+        localIdentName: '[name]-[hash]',
+        camelCase: 'only'
+      }
+    }
+  }
+}
+
+<template>
+    <h1 :class="[$style.title]">{{ msg }}</h1>
+</template>
+
+
+<style module lang="scss">
+.title {
+  margin: 40px 0 0;
+  color: red;
+}
+</style>
+
+
+渲染结果
+<h1 class="HelloWorld-feb173eaffe0c4a76b7e74ccb82f86ae">Welcome to Your Vue.js App</h1>
+
 
 # 组件
 views/Todo
