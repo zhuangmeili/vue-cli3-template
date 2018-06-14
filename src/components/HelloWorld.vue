@@ -23,4 +23,4 @@ export default {
   margin: 40px 0 0;
   color: red;
 }
-</style scoped>
+</style>

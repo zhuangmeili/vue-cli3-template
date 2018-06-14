@@ -47,11 +47,10 @@ my-app
     └── router.js
     └── store.js
 ```
-## 案例
-案例 结合官网与实际项目
+## css配置
+css配置
 ``` bash
-# 使用css module
-vue.config.js 配置
+# vue.config.js 配置
 module.exports = {
   css: {
     loaderOptions: {
@@ -63,12 +62,12 @@ module.exports = {
     }
   }
 }
-
+# template
 <template>
     <h1 :class="[$style.title]">{{ msg }}</h1>
 </template>
 
-
+# css
 <style module lang="scss">
 .title {
   margin: 40px 0 0;
@@ -77,15 +76,9 @@ module.exports = {
 </style>
 
 
-渲染结果
+# 渲染结果
 <h1 class="HelloWorld-feb173eaffe0c4a76b7e74ccb82f86ae">Welcome to Your Vue.js App</h1>
 
-
-# 组件
-views/Todo
-
-# 示例
-pages/Home
 
 ```
 
