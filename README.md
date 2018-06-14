@@ -48,13 +48,13 @@ my-app
     └── store.js
 ```
 ## 案例
-redux 案例 结合官网与实际项目
+案例 结合官网与实际项目
 ``` bash
 # 组件
-containers/Counter
+components/Counter
 
 # 组件
-containers/Todo
+views/Todo
 
 # 示例
 pages/Home
