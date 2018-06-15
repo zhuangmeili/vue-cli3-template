@@ -2,11 +2,16 @@
 ## vue-cli项目的构建指令
   - npm install -g @vue/cli //全局安装vue-cli
   - vue create projectName  //创建项目
+  - vue -h(vue --help) //查看vue帮助
+  - vue -V(vue --version)   //vue版本
+  - vue add router  //安装插件
+  - vue add vuex    //安装插件
 
 ## 常用指令
-  - npm run serve  //本地运行项目
-  - npm run build
-  -
+  - npm install    //安装本地依赖
+  - npm run serve  //本地运行项目 开发环境
+  - npm run build  //生产环境
+  - npm run test
 react-redux-demo/
   README.md
   node_modules/
@@ -48,7 +53,7 @@ my-app
     └── store.js
 ```
 ## css配置
-css配置
+
 ``` bash
 # vue.config.js 配置
 module.exports = {
@@ -62,6 +67,7 @@ module.exports = {
     }
   }
 }
+
 # template
 <template>
     <h1 :class="[$style.title]">{{ msg }}</h1>
@@ -74,7 +80,6 @@ module.exports = {
   color: red;
 }
 </style>
-
 
 # 渲染结果
 <h1 class="HelloWorld-feb173eaffe0c4a76b7e74ccb82f86ae">Welcome to Your Vue.js App</h1>
