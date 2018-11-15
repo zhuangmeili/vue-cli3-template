@@ -2,13 +2,13 @@ module.exports = {
   devServer: {
     port:8006,
     proxy:{
-      '/dptApp': {
-        target: 'http://wade.99114.cn/',
-        changeOrigin: true,
+      '/v2':{
+        target:'https://api.douban.com',
+        changeOrigin:true,
         pathRewrite: {
-          '^/dptApp': '/dptApp'
-        }
-      },
+          '^/v2' : '/v2'
+        },
+      }
     }
   },
   css: {
