@@ -21,3 +21,20 @@ export function formatTime(timestamp) {
   let arr2 = [hour, minute, second]
   return arr2.join(':')
 }
+
+// 保留两位小数，整数部门每三位一个逗号
+// 例如: 1234.1 (1,234.10)   12(12.00)
+export function formatPrice(val) {
+  if (Number(val)!= val){
+    return val
+  }
+  var str=Number(val).toFixed(2)+'';
+  var arr=str.split('.');
+  var a=arr[0];
+  var b=arr[1];
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(a)) {
+    a = a.replace(rgx, '$1' + ',' + '$2');
+  }
+  return a+'.'+b;
+}

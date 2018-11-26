@@ -7,37 +7,37 @@
       <el-tab-pane label="申请信息" name="first">
         <section class="section1">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="180px" class="addForm">
-
             <el-row>
-
               <el-col :span="12">
                 <header class="title">左侧原来的信息</header>
                 <br>
                 <br>
-                <el-form-item label="授信申请金额（元）" prop="oldCredit.creditMoney">
+                <el-form-item label="金额（元）" prop="oldCredit.formatCreditMoney">
                   <el-input v-model="ruleForm.oldCredit.creditMoney" type="text"></el-input>
                 </el-form-item>
-                <el-form-item label="授信期限" prop="oldCredit.creditDeadline">
+                <el-form-item label="期限" prop="oldCredit.creditDeadline">
                   <el-input v-model="ruleForm.oldCredit.creditDeadline" type="text"></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
-                <header class="title">右侧的信息</header>
+                <header class="title">新的信息的信息</header>
                 <br>
                 <br>
-                <el-form-item label="授信申请金额（元）" prop="oldCredit.creditMoney">
-                  <el-input v-model="ruleForm.newCredit.creditMoney" type="text"
-                            :class="changeForm('creditMoney')? '' :'colorRed'"></el-input>
+                <el-form-item
+                  label="金额" prop="newCredit.creditMoney"
+                  :class="haveChanged('creditMoney') ? 'colorRed':'' ">
+
+                  <com-price v-model="ruleForm.newCredit.creditMoney"></com-price>
                 </el-form-item>
-                <el-form-item label="授信期限" prop="oldCredit.creditDeadline">
+                <el-form-item label="期限" prop="newCredit.creditDeadline">
                   <el-input v-model="ruleForm.newCredit.creditDeadline" type="text"
-                            :class="ruleForm.newCredit.creditDeadline == ruleForm.oldCredit.creditDeadline? '' :'colorRed'"></el-input>
+                            :class="haveChanged('creditDeadline')? 'colorRed' :''"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <footer class="footer">
-              <el-button type="primary">提交</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
             </footer>
           </el-form>
         </section>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+  import ComPrice from '../components/ComPrice'
   export default {
     data() {
       // 校验 价格
@@ -63,53 +64,50 @@
         tabActiveName: 'first',
         ruleForm: {
           oldCredit:{
-            creditMoney:'100',   //授信金额
-            creditDeadline:'30',//授信期限
+            creditMoney:'100',
+            creditDeadline:'30',
+            creditDeadlineUnit:'DAY',
           },
           newCredit:{
-            creditMoney:'10',   //授信金额
-            creditDeadline:'30',//授信期限
+            creditMoney:'10',
+            creditDeadline:'3',
+            creditDeadlineUnit:'MONTH',
           },
         },
-        rules:{}
+        rules:{
+          'newCredit.creditMoney': [
+            { required: true, message: '请输入金额', trigger: 'blur' },
+            { validator: validateMoney, trigger: 'blur' }
+          ],
+        },
+        isPriceFocus:false, //是否获取焦点
 
       };
     },
+    components:{ComPrice},
     methods: {
-      changeForm(key) {
+      //修改form
+      haveChanged(key){
         const {oldCredit,newCredit } =this.ruleForm;
-        return oldCredit[key] == newCredit[key]
+        return oldCredit[key] != newCredit[key]
+      },
+
+      submitForm(formName) {
+        this.$refs[formName].validate(valid => {
+          console.log(this.ruleForm.newCredit.creditMoney)
+          if (valid) {
+
+          } else {
+            // console.log('error submit!!')
+            return false
+          }
+        })
       }
     },
-    formatCreditMoney(){
-
-    }
   }
 </script>
 
 <style scoped lang="scss">
-  ul,li,h3,h4,p{ list-style: none; padding: 0; margin: 0; font-weight: normal;}
-  .Flex{ display: flex; display: -webkit-flex;}
-  .Flex1{ -webkit-box-flex: 1;  -webkit-flex: 1;  flex: 1;}   /* 直接孩子 flex:1 */
-  .FlexVer{ -webkit-align-items: center;  align-items: center;}  /* 垂直居中 */
-  .FlexHor{ justify-content: center;-webkit-justify-content:center; } /*一行居中对齐*/
-  .HackWidth{ width: 10px;}
-  .ML10{ margin-left: 10px;}
-  .header{
-    line-height: 22px;
-    height: 22px;
-    padding: 8px 0;
-    border-bottom: 1px solid #E8E9EC;
-    font-weight: normal;
-    font-size: 16px;
-    margin-bottom: 30px;
-    span{
-      display: inline-block;
-      font-size: 16px;
-      border-left:5px solid #0486FE ;
-      text-indent: 10px;
-    }
-  }
   .footer{
     text-align: center;
     margin-top: 20px;
@@ -118,10 +116,16 @@
     .addForm{
       .el-input,.el-select{ width: 240px; }
       .chooseBtn{ margin-left: 15px;}
+
     }
 
   }
 </style>
-<style>
-  .colorRed .el-input__inner{ color: red}
+<style lang="scss">
+  .colorRed {
+    .el-input__inner{
+      color: #f56c6c;
+    }
+  }
+
 </style>
